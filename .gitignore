@@ -77,3 +77,6 @@ coverage/
 
 # Cache
 .cache/
+
+# Ignore Firebase service account JSON
+src/main/java/com/csumb/project3Backend/config/firebaseAccount.json
