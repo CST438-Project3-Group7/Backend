@@ -1,0 +1,79 @@
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Mac OS
+.DS_Store
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle
+.gradle/
+build/
+
+# Logs
+*.log
+
+# Temporary Files
+*.swp
+*.tmp
+*.bak
+*.orig
+*.backup
+*.rej
+
+# Compiled class files
+*.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Spring Boot Specific
+spring.log
+
+# Exclude the database files
+*.h2.db
+*.mv.db
+*.trace.db
+
+# Thumbnails
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# IDE Directories
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Node modules (if applicable)
+node_modules/
+
+# Coverage reports
+coverage/
+*.lcov
+*.lcov.info
+
+# SonarQube
+.sonar/
+.report-task.txt
+
+# Cache
+.cache/
