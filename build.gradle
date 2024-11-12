@@ -1,0 +1,42 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(23)
+	}
+}
+
+repositories {
+	mavenCentral()
+	google()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Import the Firebase BoM
+	implementation 'com.google.firebase:firebase-admin:9.4.0' // Check for latest version
+
+
+
+	// Add the dependencies for any other desired Firebase products
+	// https://firebase.google.com/docs/android/setup#available-libraries
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+springBoot {
+	mainClass = "com.csumb.project3Backend.DemoApplication"
+}
