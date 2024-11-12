@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 /**
  * This class is used to define the API endpoints for user settings (login, register, delete, edit, and get data)
- * ALL MAP<> DATA TYPES SHOULD BE REPLACED BY USER OBJECTS FOR CORRECT FORMATTING & TO REDUCE ERRORS
+ * ALL REQUEST BODY DATA TYPES SHOULD BE REPLACED BY USER OBJECTS FOR CORRECT FORMATTING & TO REDUCE ERRORS
  */
 
 
@@ -27,5 +27,35 @@ public class UserController {
     public int getAll() {
 
         return 1;
+    }
+
+
+    @PostMapping("/login")
+    public void login(@RequestBody int user){
+
+    }
+
+    //register/create an account
+    @PostMapping("/register")
+    public void register(@RequestBody int user){
+
+    }
+
+    //delete a user from settings
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody int user){
+
+    }
+
+    //edit user information
+    @PutMapping("/edit")
+    public void edit(@RequestBody int user){
+
+    }
+
+    //get user info to display on profile(username, etc.)
+    @GetMapping("/info")
+    public void userInfo(@RequestBody int user){
+
     }
 }
