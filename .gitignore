@@ -80,3 +80,4 @@ coverage/
 
 # Ignore Firebase service account JSON
 src/main/java/com/csumb/project3Backend/config/firebaseAccount.json
+src/main/resources/serviceAccountKey.json
