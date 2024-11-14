@@ -16,26 +16,26 @@ public class UserService {
 //    @Autowired
 //    private UserRepo userRepo
 
-    public int getAllUsers(){
-        return 0;
+    public String getAllUsers(){
+        return "All Users";
     }
-    public int loginUser(int user){
-        return 1;
-    }
-
-    public int addUser(int user){
-        return 2;
+    public String loginUser(int user){
+        return "User Logged In";
     }
 
-    public int deleteUser(int user){
-        return 3;
+    public String addUser(int user){
+        return "User Registered";
     }
 
-    public int editUser(int user){
-        return 4;
+    public String deleteUser(int user){
+        return "User Deleted";
     }
 
-    public int getUserInfo(int user){
-        return 5;
+    public String editUser(int user){
+        return "User Edited";
+    }
+
+    public String getUserInfo(int user){
+        return "User Info for User with ID: " + user;
     }
 }

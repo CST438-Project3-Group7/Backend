@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * This class is used to define make queries for feed settings (ratings, subject, date)
- * It should user the repository folder to call the database
+ * It should use the repository folder to call the database
  */
 
 
