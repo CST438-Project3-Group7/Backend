@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 
 /**
- * This class is used to define the API endpoints for feed settings (pull all, pull by name, pull by topic)
+ * This class is used to define the API endpoints for feed display & filtering (date, ratings, subject)
  */
 
 

@@ -13,7 +13,6 @@ import java.util.HashMap;
 
 /**
  * This class is used to define the API endpoints for posts and comments(create, edit, delete)
- * Endpoints for fetching posts, (all, by user, by topic) are for FeedController
  */
 
 
