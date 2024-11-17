@@ -1,62 +1,63 @@
 package com.csumb.project3Backend.services;
 
 import com.csumb.project3Backend.entities.Post;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
+import com.csumb.project3Backend.repos.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class PostService {
 
-  private final Firestore db;
+  @Autowired
+  private PostRepository postRepository;
 
-  public PostService() {
-    this.db = FirestoreClient.getFirestore();
-  }
-
-  // Create a new post
-  public String createPost(Post post) throws ExecutionException, InterruptedException {
-    ApiFuture<DocumentReference> future = db.collection("posts").add(post);
-    DocumentReference postRef = future.get();
-    return postRef.getId(); // Return generated post ID
+  // Get all posts
+  public List<Post> getAllPosts() {
+    return postRepository.findAll();
   }
 
   // Get a post by ID
-  public Post getPostById(String postId) throws ExecutionException, InterruptedException {
-    DocumentSnapshot snapshot = db.collection("posts").document(postId).get().get();
-    if (snapshot.exists()) {
-      return snapshot.toObject(Post.class);
-    }
-    return null;
+  public Optional<Post> getPostById(Integer postId) {
+    return postRepository.findById(postId);
   }
 
-  // Get all posts
-  public List<Post> getAllPosts() throws ExecutionException, InterruptedException {
-    List<Post> posts = new ArrayList<>();
-    ApiFuture<QuerySnapshot> future = db.collection("posts").get();
-    List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-    for (DocumentSnapshot document : documents) {
-      posts.add(document.toObject(Post.class));
-    }
-    return posts;
+  // Get all posts by a user
+  public List<Post> getPostsByUserId(Integer userId) {
+    return postRepository.findByUser_UserId(userId);
+  }
+
+  // Get all posts related to a subject
+  public List<Post> getPostsBySubjectId(Integer subjectId) {
+    return postRepository.findBySubject_SubjectId(subjectId);
+  }
+
+  // Add a new post
+  public Post addPost(Post post) {
+    return postRepository.save(post);
   }
 
   // Update an existing post
-  public boolean updatePost(String postId, Post updatedPost) throws ExecutionException, InterruptedException {
-    DocumentReference postRef = db.collection("posts").document(postId);
-    ApiFuture<WriteResult> future = postRef.set(updatedPost);
-    return future.get() != null; // Return true if update was successful
+  public Post updatePost(Integer postId, Post updatedPost) {
+    return postRepository.findById(postId).map(post -> {
+      post.setTitle(updatedPost.getTitle());
+      post.setContent(updatedPost.getContent());
+      post.setLikes(updatedPost.getLikes());
+      post.setDislikes(updatedPost.getDislikes());
+      post.setDatetime(updatedPost.getDatetime());
+      return postRepository.save(post);
+    }).orElseThrow(() -> new RuntimeException("Post not found with ID: " + postId));
   }
 
-  // Delete a post by ID
-  public boolean deletePost(String postId) throws ExecutionException, InterruptedException {
-    DocumentReference postRef = db.collection("posts").document(postId);
-    ApiFuture<WriteResult> future = postRef.delete();
-    return future.get() != null; // Return true if delete was successful
+  // Delete a post
+  public void deletePost(Integer postId) {
+    if (postRepository.existsById(postId)) {
+      postRepository.deleteById(postId);
+    } else {
+      throw new RuntimeException("Post not found with ID: " + postId);
+    }
   }
 }
+

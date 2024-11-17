@@ -1,52 +1,71 @@
 package com.csumb.project3Backend.controllers;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import com.csumb.project3Backend.entities.User;
+import com.csumb.project3Backend.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-
-/**
- * This class is used to define the API endpoints and their names
- */
-//test
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
-    private final Firestore db;
+    @Autowired
+    private UserService userService;
 
-    public UserController(Firestore db){
-        this.db = db;
+    // Get all users
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
-    // GET method to get all users
-    @GetMapping("/all")
-    public List<Map<String, Object>> getAll() throws InterruptedException, ExecutionException {
-        //placeholder for User Object Model
+    // Get user by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+        return userService.getUserById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
 
-        ApiFuture<QuerySnapshot> query = db.collection("users").get();
+    // Get user by username
+    @GetMapping("/username/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
 
-        // Retrieve query results
-        QuerySnapshot querySnapshot = query.get();
-        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-
-        List<Map<String, Object>> users = new ArrayList<>();
-        for (QueryDocumentSnapshot document : documents) {
-            users.add(document.getData());
+    // Add a new user
+    @PostMapping
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        if (userService.usernameExists(user.getUsername())) {
+            return ResponseEntity.badRequest().body(null);
         }
+        return ResponseEntity.ok(userService.addUser(user));
+    }
 
-        return users;
+    // Update an existing user
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User updatedUser) {
+        try {
+            User user = userService.updateUser(id, updatedUser);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Delete a user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

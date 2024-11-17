@@ -1,22 +1,39 @@
 package com.csumb.project3Backend.entities;
 
-import com.google.cloud.firestore.DocumentReference;
-import java.util.ArrayList;
-import java.util.List;
+import com.csumb.project3Backend.enums.Role;
+import jakarta.persistence.*;
+import java.util.Set;
 
+@Entity
+@Table(name = "user")
 public class User {
 
-  private String userId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer userId;
+
+  @Column(nullable = false, length = 32, unique = true)
   private String username;
-  private List<DocumentReference> posts = new ArrayList<>();
-  private String role;
+
+  @Column(nullable = false, length = 64)
   private String password;
 
-  public String getUserId() {
+  @Enumerated(EnumType.STRING)
+  private Role roles;
+
+  /*
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<Post> posts;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<Comment> comments; */
+
+  // Getters and Setters
+  public Integer getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(Integer userId) {
     this.userId = userId;
   }
 
@@ -28,22 +45,6 @@ public class User {
     this.username = username;
   }
 
-  public List<DocumentReference> getPosts() {
-    return posts;
-  }
-
-  public void setPosts(List<DocumentReference> posts) {
-    this.posts = posts;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
   public String getPassword() {
     return password;
   }
@@ -51,4 +52,29 @@ public class User {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public Role getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Role roles) {
+    this.roles = roles;
+  }
+
+  /*
+  public Set<Post> getPosts() {
+    return posts;
+  }
+
+  public void setPosts(Set<Post> posts) {
+    this.posts = posts;
+  }
+
+  public Set<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(Set<Comment> comments) {
+    this.comments = comments;
+  } */
 }

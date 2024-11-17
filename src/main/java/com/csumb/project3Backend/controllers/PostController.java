@@ -7,63 +7,66 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 public class PostController {
 
-  private final PostService postService;
-
   @Autowired
-  public PostController(PostService postService) {
-    this.postService = postService;
+  private PostService postService;
+
+  // Get all posts
+  @GetMapping
+  public List<Post> getAllPosts() {
+    return postService.getAllPosts();
   }
 
-  // Endpoint to create a new post
-  @PostMapping("/create")
-  public ResponseEntity<String> createPost(@RequestBody Post post) throws ExecutionException, InterruptedException {
-    String postId = postService.createPost(post);
-    return ResponseEntity.ok(postId); // Return generated post ID
+  // Get a post by ID
+  @GetMapping("/{id}")
+  public ResponseEntity<Post> getPostById(@PathVariable Integer id) {
+    return postService.getPostById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
   }
 
-  // Endpoint to get a post by ID
-  @GetMapping("/{postId}")
-  public ResponseEntity<Post> getPostById(@PathVariable String postId) throws ExecutionException, InterruptedException {
-    Post post = postService.getPostById(postId);
-    if (post != null) {
+  // Get all posts by a user
+  @GetMapping("/user/{userId}")
+  public List<Post> getPostsByUserId(@PathVariable Integer userId) {
+    return postService.getPostsByUserId(userId);
+  }
+
+  // Get all posts related to a subject
+  @GetMapping("/subject/{subjectId}")
+  public List<Post> getPostsBySubjectId(@PathVariable Integer subjectId) {
+    return postService.getPostsBySubjectId(subjectId);
+  }
+
+  // Add a new post
+  @PostMapping
+  public ResponseEntity<Post> addPost(@RequestBody Post post) {
+    return ResponseEntity.ok(postService.addPost(post));
+  }
+
+  // Update an existing post
+  @PutMapping("/{id}")
+  public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody Post updatedPost) {
+    try {
+      Post post = postService.updatePost(id, updatedPost);
       return ResponseEntity.ok(post);
-    } else {
+    } catch (RuntimeException e) {
       return ResponseEntity.notFound().build();
     }
   }
 
-  // Endpoint to get all posts
-  @GetMapping("/all")
-  public ResponseEntity<List<Post>> getAllPosts() throws ExecutionException, InterruptedException {
-    List<Post> posts = postService.getAllPosts();
-    return ResponseEntity.ok(posts);
-  }
-
-  // Endpoint to update an existing post
-  @PutMapping("/{postId}")
-  public ResponseEntity<String> updatePost(@PathVariable String postId, @RequestBody Post updatedPost) throws ExecutionException, InterruptedException {
-    boolean success = postService.updatePost(postId, updatedPost);
-    if (success) {
-      return ResponseEntity.ok("Post updated successfully.");
-    } else {
-      return ResponseEntity.badRequest().body("Failed to update post.");
-    }
-  }
-
-  // Endpoint to delete a post
-  @DeleteMapping("/{postId}")
-  public ResponseEntity<String> deletePost(@PathVariable String postId) throws ExecutionException, InterruptedException {
-    boolean success = postService.deletePost(postId);
-    if (success) {
-      return ResponseEntity.ok("Post deleted successfully.");
-    } else {
-      return ResponseEntity.badRequest().body("Failed to delete post.");
+  // Delete a post
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
+    try {
+      postService.deletePost(id);
+      return ResponseEntity.noContent().build();
+    } catch (RuntimeException e) {
+      return ResponseEntity.notFound().build();
     }
   }
 }
+

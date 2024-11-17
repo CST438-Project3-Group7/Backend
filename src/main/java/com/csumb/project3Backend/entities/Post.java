@@ -1,104 +1,49 @@
 package com.csumb.project3Backend.entities;
 
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.annotation.DocumentId;
-import com.google.cloud.Timestamp;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Set;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
 public class Post {
 
-  @DocumentId
-  private String postId;
-  private Timestamp date;
-  private double rating;
-  private int likes;
-  private int dislikes;
-  private DocumentReference user;
-  private List<DocumentReference> comments = new ArrayList<>();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer postId;
+
+  @Column(nullable = false, length = 64)
   private String title;
-  private String postContent;
 
-  public Post() {}
+  @Lob
+  private String content;
 
-  public Post(DocumentReference user, String title, String postText) {
-    this.user = user;
-    this.title = title;
-    this.postContent = postText;
-    this.date = Timestamp.now();
-  }
+  @Column(nullable = false)
+  private Integer likes = 0;
+
+  @Column(nullable = false)
+  private Integer dislikes = 0;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "subject_id", nullable = false)
+  private Subject subject;
+
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<Comment> comments;
+
+  @Column(nullable = false)
+  private LocalDateTime datetime;
 
   // Getters and Setters
-  public String getPostId() {
+  public Integer getPostId() {
     return postId;
   }
 
-  public void setPostId(String postId) {
+  public void setPostId(Integer postId) {
     this.postId = postId;
-  }
-
-  public String getUserPath() {
-    return user != null ? user.getPath() : null;
-  }
-
-  // Custom getter to return comment paths as a list of strings
-  public List<String> getCommentPaths() {
-    List<String> commentPaths = new ArrayList<>();
-    if (comments != null) {
-      for (DocumentReference commentRef : comments) {
-        commentPaths.add(commentRef.getPath());
-      }
-    }
-    return commentPaths;
-  }
-
-  public Timestamp getDate() {
-    return date;
-  }
-
-  public void setDate(Timestamp date) {
-    this.date = date;
-  }
-
-  public double getRating() {
-    return rating;
-  }
-
-  public void setRating(double rating) {
-    this.rating = rating;
-  }
-
-  public int getLikes() {
-    return likes;
-  }
-
-  public void setLikes(int likes) {
-    this.likes = likes;
-  }
-
-  public int getDislikes() {
-    return dislikes;
-  }
-
-  public void setDislikes(int dislikes) {
-    this.dislikes = dislikes;
-  }
-
-  public DocumentReference getUser() {
-    return user;
-  }
-
-  public void setUser(DocumentReference user) {
-    this.user = user;
-  }
-
-  public List<DocumentReference> getComments() {
-    return comments;
-  }
-
-  public void setComments(List<DocumentReference> comments) {
-    this.comments = comments;
   }
 
   public String getTitle() {
@@ -109,11 +54,60 @@ public class Post {
     this.title = title;
   }
 
-  public String getPostContent() {
-    return postContent;
+  public String getContent() {
+    return content;
   }
 
-  public void setPostContent(String postText) {
-    this.postContent = postText;
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Integer getLikes() {
+    return likes;
+  }
+
+  public void setLikes(Integer likes) {
+    this.likes = likes;
+  }
+
+  public Integer getDislikes() {
+    return dislikes;
+  }
+
+  public void setDislikes(Integer dislikes) {
+    this.dislikes = dislikes;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Subject getSubject() {
+    return subject;
+  }
+
+  public void setSubject(Subject subject) {
+    this.subject = subject;
+  }
+
+  public Set<Comment> getComments() {
+    return comments;
+  }
+
+  public void setComments(Set<Comment> comments) {
+    this.comments = comments;
+  }
+
+  public LocalDateTime getDatetime() {
+    return datetime;
+  }
+
+  public void setDatetime(LocalDateTime datetime) {
+    this.datetime = datetime;
   }
 }
+

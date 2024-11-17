@@ -1,34 +1,69 @@
 package com.csumb.project3Backend.entities;
 
-import com.google.cloud.Timestamp;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
+@Entity
 public class Comment {
-  private String ID;
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer commentId;
+
+  @Lob
+  private String content;
+
+  @Column(nullable = false)
+  private Integer likes = 0;
+
+  @Column(nullable = false)
+  private Integer dislikes = 0;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
   private User user;
-  private String postId;
-  private Timestamp date;
-  private String text;
-  private int likes;
-  private int dislikes;
 
-  public Comment(){}
+  @ManyToOne
+  @JoinColumn(name = "post_id", nullable = false)
+  private Post post;
 
-  public Comment(User user, String postId, String commentText) {
-    this.user = user;
-    this.postId = postId;
-    this.text = commentText;
-    this.date = Timestamp.now();
+  @Column(nullable = false)
+  private LocalDateTime datetime;
+
+  // Getters and Setters
+  public Integer getCommentId() {
+    return commentId;
   }
 
-  public String getID() {
-    return ID;
+  public void setCommentId(Integer commentId) {
+    this.commentId = commentId;
   }
 
-  public void setID(String ID) {
-    this.ID = ID;
+  public String getContent() {
+    return content;
   }
 
-  public User getUserId() {
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Integer getLikes() {
+    return likes;
+  }
+
+  public void setLikes(Integer likes) {
+    this.likes = likes;
+  }
+
+  public Integer getDislikes() {
+    return dislikes;
+  }
+
+  public void setDislikes(Integer dislikes) {
+    this.dislikes = dislikes;
+  }
+
+  public User getUser() {
     return user;
   }
 
@@ -36,43 +71,19 @@ public class Comment {
     this.user = user;
   }
 
-  public String getPostId() {
-    return postId;
+  public Post getPost() {
+    return post;
   }
 
-  public void setPostId(String postId) {
-    this.postId = postId;
+  public void setPost(Post post) {
+    this.post = post;
   }
 
-  public Timestamp getDate() {
-    return date;
+  public LocalDateTime getDatetime() {
+    return datetime;
   }
 
-  public void setDate(Timestamp date) {
-    this.date = date;
-  }
-
-  public String getText() {
-    return text;
-  }
-
-  public void setText(String text) {
-    this.text = text;
-  }
-
-  public int getLikes() {
-    return likes;
-  }
-
-  public void setLikes(int likes) {
-    this.likes = likes;
-  }
-
-  public int getDislikes() {
-    return dislikes;
-  }
-
-  public void setDislikes(int dislikes) {
-    this.dislikes = dislikes;
+  public void setDatetime(LocalDateTime datetime) {
+    this.datetime = datetime;
   }
 }
