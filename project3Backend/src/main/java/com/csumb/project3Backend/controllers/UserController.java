@@ -1,6 +1,8 @@
 package com.csumb.project3Backend.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import com.csumb.project3Backend.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,41 +23,43 @@ import java.util.HashMap;
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
 
     // GET method to get all users in the database
     @GetMapping("/all")
-    public int getAll() {
-
-        return 1;
+    public String getAll() {
+        return userService.getAllUsers();
     }
 
 
     @PostMapping("/login")
-    public void login(@RequestBody int user){
-
+    public String login(@RequestBody int user){
+        return userService.loginUser(user);
     }
 
-    //register/create an account
+    //register - create an account
     @PostMapping("/register")
-    public void register(@RequestBody int user){
-
+    public String register(@RequestBody int user){
+        return userService.addUser(user);
     }
 
     //delete a user from settings
     @DeleteMapping("/delete")
-    public void delete(@RequestBody int user){
-
+    public String delete(@RequestBody int user){
+        return userService.deleteUser(user);
     }
 
     //edit user information
     @PutMapping("/edit")
-    public void edit(@RequestBody int user){
-
+    public String edit(@RequestBody int user){
+        return userService.editUser(user);
     }
 
     //get user info to display on profile(username, etc.)
     @GetMapping("/info")
-    public void userInfo(@RequestBody int user){
-
+    public String userInfo(@RequestBody int user){
+        return userService.getUserInfo(user);
     }
 }
