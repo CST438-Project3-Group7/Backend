@@ -18,4 +18,4 @@ EXPOSE $PORT
 
 
 # Run the jar file when the container starts, use Heroku's dynamically provided port
-CMD java -jar /app.jar --server.port=$PORT
+CMD ["java", "-jar", "build/libs/project3Backend-0.0.1-SNAPSHOT.jar", "--server.port=$PORT"]
