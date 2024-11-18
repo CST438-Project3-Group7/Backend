@@ -15,7 +15,6 @@ java {
 
 repositories {
 	mavenCentral()
-	google()
 }
 
 dependencies {
@@ -23,14 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	// Import the Firebase BoM
-	implementation 'com.google.firebase:firebase-admin:9.4.0' // Check for latest version
-
-
-
-	// Add the dependencies for any other desired Firebase products
-	// https://firebase.google.com/docs/android/setup#available-libraries
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
 
 tasks.named('test') {
