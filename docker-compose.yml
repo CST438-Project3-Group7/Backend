@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  app:
+    image: project3-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - db_url=jdbc:mariadb://un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/opm2at3ojeqbytrv
+      - db_username=pnc1hhykoq0js3en
+      - db_password=eqvfj8lhx7xsqstn
