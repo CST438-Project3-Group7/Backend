@@ -43,6 +43,12 @@ public class CommentController {
     return commentService.getCommentsByUserId(userId);
   }
 
+  // Get all comments on a post
+  @GetMapping("/user/{postId}")
+  public List<Comment> getCommentsByPostId(@PathVariable Integer postId) {
+    return commentService.getCommentsByPostId(postId);
+  }
+
   // Add a new comment
   @PostMapping
   public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
