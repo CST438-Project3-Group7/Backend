@@ -38,6 +38,8 @@ build/
 *.jar
 *.war
 *.ear
+# But include the Gradle wrapper JAR
+!gradle/wrapper/gradle-wrapper.jar
 
 # Spring Boot Specific
 spring.log
