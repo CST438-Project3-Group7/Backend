@@ -17,7 +17,7 @@ public class FavoriteService {
 
   // Get all favorites of a user
   public List<Favorite> getFavoritesByUserId(Integer userId) {
-    return favoriteRepository.findBy_UserId(userId);
+    return favoriteRepository.findByUser_UserId(userId);
   }
 
 }
