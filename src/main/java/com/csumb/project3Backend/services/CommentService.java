@@ -27,12 +27,12 @@ public class CommentService {
 
   // Get all comments by a user
   public List<Comment> getCommentsByUserId(Integer userId) {
-    return commentRepository.findByComment_UserId(userId);
+    return commentRepository.findByUser_UserId(userId);
   }
 
   // Get all comments on a post
   public List<Comment> getCommentsByPostId(Integer postId) {
-    return commentRepository.findByPostId(postId);
+    return commentRepository.findByPost_PostId(postId);
   }
 
   // Add a new comment

@@ -44,7 +44,7 @@ public class CommentController {
   }
 
   // Get all comments on a post
-  @GetMapping("/user/{postId}")
+  @GetMapping("/post/{postId}")
   public List<Comment> getCommentsByPostId(@PathVariable Integer postId) {
     return commentService.getCommentsByPostId(postId);
   }
