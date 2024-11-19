@@ -1,11 +1,21 @@
 # Use JDK 23 image
 FROM eclipse-temurin:23-jdk-alpine
 
-# Add a volume to store the logs (optional)
-VOLUME /tmp
+# Set the working directory inside the container
+WORKDIR /app
+# Copy the Gradle wrapper and build configuration files first
+COPY build.gradle settings.gradle gradlew /app/
+COPY gradle /app/gradle/
 
-# Copy the built JAR into the container
-COPY build/libs/project3Backend-0.0.1-SNAPSHOT.jar app.jar
+# Copy the rest of the source code
+COPY src /app/src
+
+# Run the Gradle build inside the container to create the JAR file
+RUN ./gradlew clean build
+
+# Copy the generated JAR file from build/libs to the working directory
+RUN mv /app/build/libs/project3Backend-0.0.1-SNAPSHOT.jar /app/app.jar
+
 
 # Set environment variables for the database connection
 ENV db_url="jdbc:mariadb://un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/opm2at3ojeqbytrv"
