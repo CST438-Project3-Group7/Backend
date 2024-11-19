@@ -13,10 +13,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
   // Find all Comments by a specific user
   List<Comment> findByComment_UserId(Integer userId);
 
-  // Find all posts related to a specific subject
-  List<Comment> findBySubject_SubjectId(Integer subjectId);
-
-  // Find all posts ordered by the number of likes in descending order
-  List<Comment> findAllByOrderByLikesDesc();
+  // Find all Comments on a specific post
+  List<Comment> findByPostId(Integer postId);
 }
 

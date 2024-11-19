@@ -30,6 +30,11 @@ public class CommentService {
     return commentRepository.findByComment_UserId(userId);
   }
 
+  // Get all comments on a post
+  public List<Comment> getCommentsByPostId(Integer postId) {
+    return commentRepository.findByPostId(postId);
+  }
+
   // Add a new comment
   public Comment addComment(Comment comment) {
     return commentRepository.save(comment);
