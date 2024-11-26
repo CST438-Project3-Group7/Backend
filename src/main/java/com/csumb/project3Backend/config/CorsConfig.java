@@ -13,7 +13,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true); // Allow cookies if needed
-        config.addAllowedOrigin("https://criticconnect-386d21b2b7d1.herokuapp.com/");
+        config.addAllowedOrigin("http://localhost:8081");
         config.addAllowedHeader("*"); // Allow all headers
         config.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, OPTIONS, etc.)
 
