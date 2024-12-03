@@ -21,6 +21,9 @@ public class User {
   @Enumerated(EnumType.STRING)
   private Role roles;
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<Favorite> favorites;
+
   /*
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<Post> posts;
@@ -59,6 +62,14 @@ public class User {
 
   public void setRoles(Role roles) {
     this.roles = roles;
+  }
+
+  public Set<Favorite> getFavorites() {
+    return favorites;
+  }
+
+  public void setFavorites(Set<Favorite> favorites) {
+    this.favorites = favorites;
   }
 
   /*
