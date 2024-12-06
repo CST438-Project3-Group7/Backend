@@ -36,7 +36,7 @@ public class SubjectService {
           subject.setTitle(updatedSubject.getTitle());
           subject.setYear(updatedSubject.getYear());
           subject.setType(updatedSubject.getType());
-          subject.setFavorites(updatedSubject.getFavorites());
+          //subject.setFavorites(updatedSubject.getFavorites());
           return subjectRepository.save(subject);
         })
         .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));

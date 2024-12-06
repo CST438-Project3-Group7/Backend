@@ -24,8 +24,8 @@ public class Subject {
   @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<Post> posts; */
 
-  @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Favorite> favorites;
+  /*@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<Favorite> favorites; */
 
   // Getters and Setters
   public Integer getSubjectId() {
@@ -69,12 +69,13 @@ public class Subject {
     this.posts = posts;
   } */
 
+  /*
   public Set<Favorite> getFavorites() {
     return favorites;
   }
 
   public void setFavorites(Set<Favorite> favorites) {
     this.favorites = favorites;
-  }
+  } */
 }
 
