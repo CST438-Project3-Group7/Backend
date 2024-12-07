@@ -25,7 +25,7 @@ public class Comment {
 
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
-  private Post post;
+  private int postId;
 
   @Column(nullable = false)
   private LocalDateTime datetime;
@@ -71,12 +71,12 @@ public class Comment {
     this.user = user;
   }
 
-  public Post getPost() {
-    return post;
+  public int getPostId() {
+    return this.postId;
   }
 
-  public void setPost(Post post) {
-    this.post = post;
+  public void setPostId(int postId) {
+    this.postId = postId;
   }
 
   public LocalDateTime getDatetime() {
