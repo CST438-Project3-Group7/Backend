@@ -1,5 +1,6 @@
 package com.csumb.project3Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -23,9 +24,11 @@ public class Comment {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
+
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
-  private int postId;
+  @JsonIgnore
+  private Post post;
 
   @Column(nullable = false)
   private LocalDateTime datetime;
@@ -71,13 +74,15 @@ public class Comment {
     this.user = user;
   }
 
-  public int getPostId() {
-    return this.postId;
+
+  public Post getPost() {
+    return post;
   }
 
-  public void setPostId(int postId) {
-    this.postId = postId;
+  public void setPost(Post post) {
+    this.post = post;
   }
+
 
   public LocalDateTime getDatetime() {
     return datetime;
