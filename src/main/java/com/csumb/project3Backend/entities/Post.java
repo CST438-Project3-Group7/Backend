@@ -31,7 +31,9 @@ public class Post {
   @JoinColumn(name = "subject_id", nullable = false)
   private Subject subject;
 
-  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  //@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany
+  @JoinColumn(name = "post_id")
   private Set<Comment> comments;
 
   @Column(nullable = false)
