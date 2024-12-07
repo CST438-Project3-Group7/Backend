@@ -1,5 +1,6 @@
 package com.csumb.project3Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class Comment {
 
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
-  @JsonIgnore
+  @JsonBackReference
   private Post post;
 
   @Column(nullable = false)
