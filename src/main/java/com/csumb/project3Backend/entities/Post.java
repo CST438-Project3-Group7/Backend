@@ -1,5 +1,6 @@
 package com.csumb.project3Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class Post {
   //@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @OneToMany
   @JoinColumn(name = "post_id")
+  @JsonManagedReference
   private Set<Comment> comments;
 
   @Column(nullable = false)
