@@ -20,7 +20,7 @@ RUN mv /app/build/libs/project3Backend-0.0.1-SNAPSHOT.jar /app/app.jar
 # Set environment variables for the database connection
 ENV db_url="jdbc:mariadb://un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/opm2at3ojeqbytrv"
 ENV db_username="pnc1hhykoq0js3en"
-ENV db_password="eqvfj8lhx7xsqstn"
+ENV db_password="ck34xtkay1sncz83"
 
 EXPOSE $PORT
 
