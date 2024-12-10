@@ -1,6 +1,7 @@
 package com.csumb.project3Backend.entities;
 
 import com.csumb.project3Backend.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class User {
   @Enumerated(EnumType.STRING)
   private Role roles;
 
+  @JsonManagedReference
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<Favorite> favorites;
 

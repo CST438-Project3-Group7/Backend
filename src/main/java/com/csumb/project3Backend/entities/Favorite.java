@@ -1,5 +1,6 @@
 package com.csumb.project3Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +10,7 @@ public class Favorite {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer favoriteId;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
